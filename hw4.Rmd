@@ -17,7 +17,8 @@ print(ChickWeight)
 ```{r}
 weight0 <- ChickWeight %>%
   group_by(Diet) %>%
-  summarize(avg = mean(weight), sd= sd(weight)) 
+  summarize(avg = mean(weight), sd= sd(weight))
+  
 
 print(weight0)
 ```
@@ -28,26 +29,39 @@ complete <- ChickWeight %>%
   tally(name="num_measurements") %>%
   filter(num_measurements > 11)
 
-complete[order("num_measurements")]
-complete <- head(complete,3)
 
-print(complete)
+print(head(complete,3))
+
 ```
-
-2.
-```{r}
-check_complete <- group_by(ChickWeight, Chick) %>% summarise(n = n())
-check_vector <- check_complete %>% filter(n == max(check_complete$n)) %>% pull(Chick)
-complete <- ChickWeight %>% filter(Chick %in% check_vector)
-print(complete[0:3, ])
-```
-
 
 3.
 ```{r}
-# 
-weightgain <- ChickWeight %>%
-  group_by(Chick) %>%
+
+# only add if in previous df 
+foo <- list()
+
+print((nrow(ChickWeight)))
+for (row in 1:nrow(ChickWeight)) {
+  print(ChickWeight[row,]$Chick)
+  if (ChickWeight[row,]$Chick %in% complete$Chick){
+    append(foo,ChickWeight[row,])
+  }
   
+}
+data.frame(foo)
+#weightgain <- ChickWeight %>%
+  #group_by(Chick) %>%
+  #mutate(zerow = weight[Time == 0]) %>%
+  #mutate(weightgain = weight - zerow) %>%
+ # select(-zerow) 
+#head(complete, 3)
+  
+```
+4.
+```{r}
+ChickWeight[3] <- lapply(ChickWeight[3], as.numeric)
+
+foo <- ChickWeight %>%
+filter(df, ChickWeight$Chick %in% complete$Chick)
 ```
 
