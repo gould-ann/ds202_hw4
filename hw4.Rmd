@@ -83,15 +83,32 @@ The chick that gained the most weight was on Diet 3, and was Chick 40.
 6.
 ```{r}
 
-
-
-lil_peep <- ChickWeight %>%
+all_peeps <- complete %>%
   group_by(Chick) %>%
-  mutate(least_weight = min(weight)) %>%
-  filter(least_weight == weight) %>%
-  arrange(desc())
+  filter(Time == 0) %>%
+  arrange(weight)
 
-print(lil_peep)
+# Chick 25 and Chick 24
+
+small_peep <- complete %>%
+  filter(Chick == 25)
+
+large_peep <- complete %>%
+  filter(Chick == 24)
+
+avg_weight <- ChickWeight %>%
+  group_by(Time) %>%
+  mutate(avg_weight = mean(weight))
+  
+
+ggplot() + 
+  geom_line(data = small_peep, aes(x = Time, y = weight), color = "blue") +
+  geom_line(data = large_peep, aes(x = Time, y = weight), color = "red") + 
+  # 7
+  geom_line(data = avg_weight, aes(x = Time, y = avg_weight), color = "black")
+
+
 ```
+
 
 
