@@ -110,5 +110,22 @@ ggplot() +
 
 ```
 
+8. Looking into median chick weight per day of study and comparing to average... Was curious to see if there was a likelihood of outliers being present.
+```{r}
+# print(ChickWeight)
 
+
+weight_measure <- ChickWeight %>%
+  group_by(Time) %>%
+  mutate(avg_weight = mean(weight)) %>% 
+  mutate(med_weight = median(weight))
+
+
+ggplot() + 
+  geom_line(data = weight_measure, aes(x = Time, y = avg_weight), color = "black")  + 
+  geom_line(data = weight_measure, aes(x = Time, y = med_weight), color = "purple") 
+
+```
+
+From this exploration, since the median and mean are very similar by time we can tell that there aren't that many outliers in our data.  
 
